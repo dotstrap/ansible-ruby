@@ -23,10 +23,10 @@ packages:
   - docopt
   - ghi
   - yard
+  - travis
   - tmuxinator
   - parallel
   - bundler
-  - travis
 ```
 
 The following configuration files will be used:

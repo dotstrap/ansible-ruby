@@ -3,7 +3,7 @@ dependencies: mkwmms.dotstrap
 
 galaxy_info:
   author: mkwmms
-  description: Bootstrap ruby: install ruby & configure dotfiles, install extra gems.
+  description: "Bootstrap ruby: install ruby & configure dotfiles, install extra gems."
   license: "license (GPLv3)"
   min_ansible_version: 2.0
   platforms:
