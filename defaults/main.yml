@@ -1,0 +1,16 @@
+---
+# defaults file for dotstrap-ruby
+packages: 
+  - thor
+  - colorize
+  - chronic
+  - dotstrap
+  - jeweler
+  - docopt
+  - ghi
+  - yard
+  - tmuxinator
+  - parallel
+  - bundler
+
+

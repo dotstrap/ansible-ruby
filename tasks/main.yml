@@ -1,0 +1,34 @@
+---
+# tasks file for dotstrap-ruby
+# TODO: use RVM to install ruby instead?
+- name: install
+  package: 
+    name: ruby 
+    state: latest
+  tags: 
+    - bootstrap
+    - install
+    - update
+
+# TODO: use configure role
+
+- name: install gems
+  gem: 
+    name: "{{ item }}" 
+    include_doc: no 
+    state: latest
+  with_items: "{{ packages }}"
+  tags: 
+    - bootstrap
+    - install
+    - update
+
+- name: uninstall gems
+  gem: 
+    name: "{{ item }}" 
+    state: absent
+    include_dependencies: yes
+  with_items: "{{ packages }}"
+  tags: 
+    - uninstall
+
