@@ -1,6 +1,5 @@
 dotstrap-ruby
 =========
-[![Build Status](https://travis-ci.org/mkwmms/ansible-dotstrap-ruby.svg)](https://travis-ci.org/mkwmms/ansible-dotstrap-ruby)
 
 Bootstrap ruby: install ruby & configure dotfiles, install extra gems.
 
@@ -27,6 +26,7 @@ packages:
   - tmuxinator
   - parallel
   - bundler
+  - travis
 ```
 
 The following configuration files will be used:

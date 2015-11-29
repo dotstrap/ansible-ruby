@@ -9,6 +9,7 @@ packages:
   - docopt
   - ghi
   - yard
+  - travis
   - tmuxinator
   - parallel
   - bundler
