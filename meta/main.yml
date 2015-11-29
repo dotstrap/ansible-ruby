@@ -22,3 +22,6 @@ galaxy_info:
   categories:
     - development
     - system
+    - dotfiles
+    - dotstrap
+    - ruby
