@@ -1,6 +1,6 @@
 dotstrap-ruby
 =========
-[![Build Status](https://travis-ci.org/mkwmms/ansible-dotstrap-ruby.svg)](https://travis-ci.org/mkwmms/ansible-dotstrap-ruby)<Paste>
+[![Build Status](https://travis-ci.org/mkwmms/ansible-dotstrap-ruby.svg)](https://travis-ci.org/mkwmms/ansible-dotstrap-ruby)
 
 Bootstrap ruby: install ruby & configure dotfiles, install extra gems.
 
