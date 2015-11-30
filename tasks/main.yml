@@ -1,7 +1,8 @@
 ---
 # tasks file for dotstrap-ruby
+
 # TODO: use RVM to install ruby instead?
-- name: install
+- name: install ruby
   package: 
     name: ruby 
     state: latest

@@ -1,10 +1,8 @@
 ---
-dependencies: []
-
 galaxy_info:
   author: mkwmms
   description: "Bootstrap ruby: install ruby & configure dotfiles, install extra gems."
-  license: "license (GPLv3)"
+  license: GPLv3
   min_ansible_version: 2.0
   platforms:
     - name: GenericUNIX
@@ -19,9 +17,15 @@ galaxy_info:
       versions:
         - all
         - any
-  categories:
+  galaxy_tags:
     - development
-    - system
     - dotfiles
     - dotstrap
     - ruby
+    - system
+
+dependencies: []
+# dependencies: 
+# - mkwmms.dotstrap
+# - mkwmms.dotstrap-system
+# TODO: should ruby role depend on pkg role?
