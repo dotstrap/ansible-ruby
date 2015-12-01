@@ -1,6 +1,6 @@
 ---
 # defaults file for dotstrap-ruby
-packages: 
+ruby_packages: 
   - thor
   - colorize
   - chronic

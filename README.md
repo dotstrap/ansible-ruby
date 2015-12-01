@@ -15,7 +15,7 @@ Role Variables
 The following `gem` packages will be installed:
 
 ```
-packages: 
+ruby_packages: 
   - thor
   - colorize
   - chronic

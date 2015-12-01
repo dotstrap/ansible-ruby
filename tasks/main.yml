@@ -3,10 +3,10 @@
 
 # TODO: use RVM to install ruby instead?
 - name: install ruby
-  package: 
-    name: ruby 
+  package:
+    name: ruby
     state: latest
-  tags: 
+  tags:
     - bootstrap
     - install
     - update
@@ -14,22 +14,22 @@
 # TODO: use configure role
 
 - name: install gems
-  gem: 
-    name: "{{ item }}" 
-    include_doc: no 
+  gem:
+    name: "{{ item }}"
+    include_doc: no
     state: latest
-  with_items: "{{ packages }}"
-  tags: 
+  with_items: "{{ ruby_packages }}"
+  tags:
     - bootstrap
     - install
     - update
 
-- name: uninstall gems
-  gem: 
-    name: "{{ item }}" 
+- name: remove gems
+  gem:
+    name: "{{ item }}"
     state: absent
     include_dependencies: yes
-  with_items: "{{ packages }}"
-  tags: 
-    - uninstall
+  with_items: "{{ ruby_packages }}"
+  tags:
+    - remove
 
