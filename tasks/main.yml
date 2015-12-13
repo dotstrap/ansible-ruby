@@ -24,12 +24,12 @@
     - install
     - update
 
-- name: remove gems
-  gem:
-    name: "{{ item }}"
-    state: absent
-    include_dependencies: yes
-  with_items: "{{ ruby_packages }}"
-  tags:
-    - remove
+# - name: remove gems
+  # gem:
+    # name: "{{ item }}"
+    # state: absent
+    # include_dependencies: yes
+  # with_items: "{{ ruby_packages }}"
+  # tags:
+    # - remove
 
