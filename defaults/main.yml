@@ -1,6 +1,16 @@
 ---
 # defaults file for dotstrap-ruby
-ruby_packages: 
+
+dotstrap_config_home: "{{ ansible_user_dir }}/.config/dotstrap"
+
+marker: "#####=== {mark} Ansible managed Ruby settings ===#####"
+
+install_state: present
+configuration_state: present
+
+gem_home: "{{ ansible_user_dir }}/.local"
+
+gems:
   - thor
   - colorize
   - chronic
@@ -13,5 +23,3 @@ ruby_packages:
   - tmuxinator
   - parallel
   - bundler
-
-

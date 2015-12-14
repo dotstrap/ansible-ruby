@@ -2,7 +2,7 @@ dotstrap-ruby
 =========
 [![Build Status](https://travis-ci.org/mkwmms/ansible-dotstrap-ruby.svg)](https://travis-ci.org/mkwmms/ansible-dotstrap-ruby)
 
-Bootstrap ruby: install ruby & configure dotfiles, install extra gems.
+Bootstrap ruby: install ruby, configure dotfiles, & install extra gems.
 
 Requirements
 ------------
@@ -12,44 +12,38 @@ None.
 Role Variables
 --------------
 
-The following `gem` packages will be installed:
-
-```
-ruby_packages: 
-  - thor
-  - colorize
-  - chronic
-  - dotstrap
-  - jeweler
-  - docopt
-  - ghi
-  - yard
-  - travis
-  - tmuxinator
-  - parallel
-  - bundler
-```
-
-The following configuration files will be used:
-
-`files/path.sh` for `zsh`, `bash`, & `sh` shells.
-
-`files/path.fish` for `fish` shell.
+See [default variables].
 
 Dependencies
 ------------
 
-```
-mkwmms.dotstrap
-```
+None.
 
 Example Playbook
 ----------------
 
+Using all the [default variables]:
+
 ```
     - hosts: servers
       roles:
-         - { role: mkwmms.dotstrap-ruby }
+         - role: mkwmms.dotstrap-ruby
+```
+
+Overriding some of the [default variables]:
+
+```
+    - hosts: servers
+      roles:
+         - role: mkwmms.dotstrap-ruby
+           install_state: latest
+           configuration_state: present
+           gem_home: "{{ ansible_user_dir }}/.gem"
+           gems: 
+             - thor
+             - yard
+             - travis
+
 ```
 
 License
@@ -63,3 +57,6 @@ Author Information
 [@mkwmms]
 
 [@mkwmms]: https://github.com/mkwmms
+[files]: files/
+[default variables]: defaults/main.yml
+[variables]: vars/main.yml

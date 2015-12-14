@@ -1,35 +1,43 @@
 ---
 # tasks file for dotstrap-ruby
 
-# TODO: use RVM to install ruby instead?
-- name: install ruby
-  package:
-    name: ruby
-    state: latest
+# Install ruby
+- block:
+  - name: setup install
+    file: dest="{{ gem_home }}" state=directory
+
+  - name: install ruby
+    package: name=ruby state="{{ install_state }}"
+
+  - name: install gems
+    gem: name="{{ item }}" state="{{ install_state }}" include_doc=no user_install=no
+    with_items: "{{ gems }}"
+    environment:
+      GEM_HOME: "{{ gem_home }}"
   tags:
     - bootstrap
     - install
     - update
 
-# TODO: use configure role
+# Configure ruby
+- block:
+  - name: setup configuration
+    file: dest="{{ dotstrap_config_home }}" state=directory
 
-- name: install gems
-  gem:
-    name: "{{ item }}"
-    include_doc: no
-    state: latest
-  with_items: "{{ ruby_packages }}"
+  - name: configure ruby gems for fish
+    blockinfile: dest="{{ dotstrap_config_home }}/config.fish"
+                 create=yes backup=no state="{{ configuration_state }}"
+                 marker="{{ marker }}"
+                 block="set -x GEM_HOME {{ gem_home }}"
+  - name: configure ruby gems for bash & zsh
+    blockinfile: dest="{{ dotstrap_config_home }}/config.{{ item }}"
+                 create=yes backup=no state="{{ configuration_state }}"
+                 marker="{{ marker }}"
+                 block="export GEM_HOME={{ gem_home }}"
+    with_items:
+      - bash
+      - zsh
   tags:
     - bootstrap
-    - install
     - update
-
-# - name: remove gems
-  # gem:
-    # name: "{{ item }}"
-    # state: absent
-    # include_dependencies: yes
-  # with_items: "{{ ruby_packages }}"
-  # tags:
-    # - remove
-
+    - configure
