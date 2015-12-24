@@ -1,14 +1,14 @@
 ---
 # defaults file for dotstrap-ruby
 
-dotstrap_config_home: "{{ ansible_user_dir }}/.config/dotstrap"
+dotstrap_config_dir: "{{ ansible_user_dir }}/.config/dotstrap"
 
 marker: "#####=== {mark} Ansible managed Ruby settings ===#####"
 
 install_state: present
 configuration_state: present
 
-gem_home: "{{ ansible_user_dir }}/.local"
+user_install: no
 
 gems:
   - thor
