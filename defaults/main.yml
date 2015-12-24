@@ -8,7 +8,7 @@ marker: "#####=== {mark} Ansible managed Ruby settings ===#####"
 install_state: present
 configuration_state: present
 
-user_install: no
+gem_user_install: no
 
 gems:
   - thor

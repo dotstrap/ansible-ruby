@@ -13,89 +13,13 @@
       name: "{{ item }}"
       state: "{{ install_state }}"
       include_doc: no
-      user_install: "{{ user_install }}"
+      user_install: "{{ gem_user_install }}"
     with_items: "{{ gems }}"
-  rescue:
-    user_install: yes
-    gem:
-      name: "{{ item }}"
-      state: "{{ install_state }}"
-      include_doc: no
-      user_install: yes
   tags:
     - bootstrap
     - install
     - update
 
-# configure bash/sh/zsh
-- block:
-    - name: setup | configuration
-      file: dest="{{ dotstrap_config_dir }}" state=directory
-
-    - name: configure | pathmunge shell function
-      blockinfile:
-        dest: "{{ dotstrap_config_dir }}/config.{{ item }}"
-        create: yes
-        backup: no
-        state: present
-        insertbefore: BOF
-        marker: "#####=== {mark} Ansible managed pathmunge ===#####"
-        # FIXME: "{{ item }}" is not expanding in block for blockinfile
-        block: |
-          #!/usr/bin/env {{ item }}
-
-          pathmunge () {
-            case ":${PATH}:" in
-              *:"$1":*)
-                ;;
-              *)
-                if [ "$2" = "after" ] ; then
-                  PATH=$PATH:$1
-                else
-                  PATH=$1:$PATH
-                fi
-            esac
-          }
-
-          manpathmunge () {
-            case ":${MANPATH}:" in
-              *:"$1":*)
-                ;;
-              *)
-                if [ "$2" = "after" ] ; then
-                  MANPATH=$MANPATH:$1
-                else
-                  MANPATH=$1:$MANPATH
-                fi
-            esac
-          }
-
-    - name: configure | bash/sh/zsh | ruby gems PATH
-      blockinfile:
-        dest: "{{ dotstrap_config_dir }}/config.{{ item }}"
-        state: "{{ configuration_state }}"
-        create: yes
-        backup: no
-        marker: "{{ marker }}"
-        block: |
-          pathmunge "{{ ansible_user_dir}}/.gem/bin"
-          manpathmunge "{{ ansible_user_dir}}/.gem/"
-          export PATH=$PATH
-          export MANPATH=$MANPATH
-  with_items:
-    - bash
-    - sh
-    - zsh
-  when: user_install != 'no'
-  tags:
-    - bootstrap
-    - update
-    - configure
-
-- name: configure | fish | ruby gems PATH
-  command: fish -c "set -U fish_user_paths {{ ansible_user_dir }}/.gem/bin $fish_user_paths"
-  when: (ansible_user_shell | match(".*fish")) and (user_install != 'no')
-  tags:
-    - bootstrap
-    - update
-    - configure
+- name: include | configure gem user install
+  include: configure_gems.yml
+  when: gem_user_install == True

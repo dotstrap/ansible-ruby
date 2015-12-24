@@ -1,0 +1,80 @@
+---
+# tasks file for configuring gem user install
+
+# configure bash/sh/zsh
+- block:
+    - name: setup | configuration
+      file: dest="{{ dotstrap_config_dir }}" state=directory
+
+    - name: setup | determine ruby gems directory
+      command: ls "{{ ansible_user_dir }}"/.gem/ruby
+      register: ruby_version
+
+    - name: configure | pathmunge shell function
+      blockinfile:
+        dest: "{{ dotstrap_config_dir }}/config.{{ item }}"
+        create: yes
+        backup: no
+        state: present
+        insertbefore: BOF
+        marker: "#####=== {mark} Ansible managed pathmunge ===#####"
+        # FIXME: "{{ item }}" is not expanding in block for blockinfile
+        block: |
+          #!/usr/bin/env {{ item }}
+
+          pathmunge () {
+            case ":${PATH}:" in
+              *:"$1":*)
+                ;;
+              *)
+                if [ "$2" = "after" ] ; then
+                  PATH=$PATH:$1
+                else
+                  PATH=$1:$PATH
+                fi
+            esac
+          }
+
+          manpathmunge () {
+            case ":${MANPATH}:" in
+              *:"$1":*)
+                ;;
+              *)
+                if [ "$2" = "after" ] ; then
+                  MANPATH=$MANPATH:$1
+                else
+                  MANPATH=$1:$MANPATH
+                fi
+            esac
+          }
+      with_items:
+        - bash
+        - sh
+        - zsh
+
+    - name: configure | bash/sh/zsh | ruby gems PATH
+      blockinfile:
+        dest: "{{ dotstrap_config_dir }}/config.{{ item }}"
+        state: "{{ configuration_state }}"
+        create: yes
+        backup: no
+        marker: "{{ marker }}"
+        block: |
+          pathmunge {{ ansible_user_dir}}/.gem/ruby/{{ ruby_version.stdout }}/bin
+          export PATH=$PATH
+      with_items:
+        - bash
+        - sh
+        - zsh
+  tags:
+    - bootstrap
+    - update
+    - configure
+
+- name: configure | fish | ruby gems PATH
+  command: fish -c "set -U fish_user_paths {{ ansible_user_dir }}/.gem/ruby/{{ ruby_version.stdout }}/bin $fish_user_paths"
+  when: ansible_user_shell | match(".*fish")
+  tags:
+    - bootstrap
+    - update
+    - configure
