@@ -1,18 +1,15 @@
 ---
-# tasks file for configuring gem user install
 
-# configure bash/sh/zsh
+#####=== configure ===#####
+
 - block:
-    - name: setup | configuration
-      file: dest="{{ dotstrap_config_dir }}" state=directory
-
     - name: setup | determine ruby gems directory
       command: ls "{{ ansible_user_dir }}"/.gem/ruby
       register: ruby_version
 
-    - name: configure | pathmunge shell function
+    - name: bash/zsh | configure | pathmunge shell function
       blockinfile:
-        dest: "{{ dotstrap_config_dir }}/config.{{ item }}"
+        dest: "{{ shell_profile }}"
         create: yes
         backup: no
         state: present
@@ -20,7 +17,7 @@
         marker: "#####=== {mark} Ansible managed pathmunge ===#####"
         # FIXME: "{{ item }}" is not expanding in block for blockinfile
         block: |
-          #!/usr/bin/env {{ item }}
+          #!/usr/bin/env {{ ansible_user_shell_name }}
 
           pathmunge () {
             case ":${PATH}:" in
@@ -47,34 +44,26 @@
                 fi
             esac
           }
-      with_items:
-        - bash
-        - sh
-        - zsh
 
-    - name: configure | bash/sh/zsh | ruby gems PATH
+    - name: bash/zsh | configure | ruby gems PATH
       blockinfile:
-        dest: "{{ dotstrap_config_dir }}/config.{{ item }}"
+        dest: "{{ shell_profile }}"
         state: "{{ configuration_state }}"
         create: yes
         backup: no
-        marker: "{{ marker }}"
+        marker: "{{ ruby_marker }}"
         block: |
           pathmunge {{ ansible_user_dir}}/.gem/ruby/{{ ruby_version.stdout }}/bin
           export PATH=$PATH
-      with_items:
-        - bash
-        - sh
-        - zsh
   tags:
     - bootstrap
-    - update
     - configure
+    - update
 
-- name: configure | fish | ruby gems PATH
+- name: fish | configure | ruby gems PATH
   command: fish -c "set -U fish_user_paths {{ ansible_user_dir }}/.gem/ruby/{{ ruby_version.stdout }}/bin $fish_user_paths"
   when: ansible_user_shell | match(".*fish")
   tags:
     - bootstrap
-    - update
     - configure
+    - update

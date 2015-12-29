@@ -1,18 +1,18 @@
-dotstrap-ruby
+ruby
 =========
-[![Build Status](https://travis-ci.org/mkwmms/ansible-dotstrap-ruby.svg)](https://travis-ci.org/mkwmms/ansible-dotstrap-ruby)
+[![Build Status](https://travis-ci.org/mkwmms/ansible-ruby.svg)](https://travis-ci.org/mkwmms/ansible-ruby)
 
-Bootstrap ruby: install ruby, configure dotfiles, & install extra gems.
+Install & configure ruby; install extra gems.
 
 Requirements
 ------------
 
-None.
+A system package manager.
 
 Role Variables
 --------------
 
-See [default variables].
+See [default variables] & [variables].
 
 Dependencies
 ------------
@@ -27,7 +27,7 @@ Using all the [default variables]:
 ```
     - hosts: servers
       roles:
-         - role: mkwmms.dotstrap-ruby
+         - role: mkwmms.ruby
 ```
 
 Overriding some of the [default variables]:
@@ -35,7 +35,7 @@ Overriding some of the [default variables]:
 ```
     - hosts: servers
       roles:
-         - role: mkwmms.dotstrap-ruby
+         - role: mkwmms.ruby
            install_state: latest
            configuration_state: present
            gem_home: "{{ ansible_user_dir }}/.gem"
@@ -45,6 +45,12 @@ Overriding some of the [default variables]:
              - travis
 
 ```
+
+Notes
+-----
+
+__Warning__: This role modifies your default shell configuration file, eg.
+`~/.bash_profile`, `~/.zshrc` or `~/.config/fish/config.fish`.
 
 License
 -------
@@ -57,6 +63,14 @@ Author Information
 [@mkwmms]
 
 [@mkwmms]: https://github.com/mkwmms
-[files]: files/
+[aura]: https://github.com/aurapm/aura
 [default variables]: defaults/main.yml
+[dotstrap]: https://github.com/mkwmms/dotstrap
+[fasd]: https://github.com/clvv/fasd
+[files]: files/
+[fish]: http://fishshell.com/
+[homebrew]: https://github.com/Homebrew/homebrew
 [variables]: vars/main.yml
+[yaourt]: https://github.com/archlinuxfr/yaourt
+[z]: https://github.com/rupa/z
+[zsh]: http://zsh.sourceforge.net
