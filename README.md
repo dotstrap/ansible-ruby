@@ -1,5 +1,5 @@
-ruby
-=========
+ansible-ruby
+============
 [![Build Status](https://travis-ci.org/mkwmms/ansible-ruby.svg)](https://travis-ci.org/mkwmms/ansible-ruby)
 
 Install & configure ruby; install extra gems.
