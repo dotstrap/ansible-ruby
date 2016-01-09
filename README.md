@@ -4,6 +4,13 @@ ansible-ruby
 
 Install & configure ruby; install extra gems.
 
+Installation
+------------
+
+```
+ansible-galaxy install mkwmms.ruby
+```
+
 Requirements
 ------------
 
