@@ -61,7 +61,7 @@
     - update
 
 - name: fish | configure | ruby gems PATH
-  command: fish -c "set -U fish_user_paths {{ ansible_user_dir }}/.gem/ruby/{{ ruby_version.stdout }}/bin $fish_user_paths"
+  command: fish -c "set -Ux fish_user_paths {{ ansible_user_dir }}/.gem/ruby/{{ ruby_version.stdout }}/bin $fish_user_paths"
   when: ansible_user_shell | match(".*fish")
   tags:
     - bootstrap
