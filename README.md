@@ -1,6 +1,6 @@
 ansible-ruby
 ============
-[![Build Status](https://travis-ci.org/mkwmms/ansible-ruby.svg)](https://travis-ci.org/mkwmms/ansible-ruby)
+[![Build Status](https://travis-ci.org/mwilliammyers/ansible-ruby.svg)](https://travis-ci.org/mwilliammyers/ansible-ruby)
 
 Install & configure ruby; install extra gems.
 
@@ -8,7 +8,7 @@ Installation
 ------------
 
 ```
-ansible-galaxy install mkwmms.ruby
+ansible-galaxy install mwilliammyers.ruby
 ```
 
 Requirements
@@ -34,7 +34,7 @@ Using all the [default variables]:
 ```
     - hosts: servers
       roles:
-         - role: mkwmms.ruby
+         - role: mwilliammyers.ruby
 ```
 
 Overriding some of the [default variables]:
@@ -42,7 +42,7 @@ Overriding some of the [default variables]:
 ```
     - hosts: servers
       roles:
-         - role: mkwmms.ruby
+         - role: mwilliammyers.ruby
            install_state: latest
            configuration_state: present
            gem_home: "{{ ansible_user_dir }}/.gem"
@@ -67,12 +67,12 @@ GPLv3
 Author Information
 ------------------
 
-[@mkwmms]
+[@mwilliammyers]
 
-[@mkwmms]: https://github.com/mkwmms
+[@mwilliammyers]: https://github.com/mwilliammyers
 [aura]: https://github.com/aurapm/aura
 [default variables]: defaults/main.yml
-[dotstrap]: https://github.com/mkwmms/dotstrap
+[dotstrap]: https://github.com/mwilliammyers/dotstrap
 [fasd]: https://github.com/clvv/fasd
 [files]: files/
 [fish]: http://fishshell.com/
