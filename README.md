@@ -1,6 +1,6 @@
 ansible-ruby
 ============
-[![Build Status](https://travis-ci.org/mwilliammyers/ansible-ruby.svg)](https://travis-ci.org/mwilliammyers/ansible-ruby)
+[![Build Status](https://travis-ci.org/dotstrap/ansible-ruby.svg)](https://travis-ci.org/dotstrap/ansible-ruby)
 
 Install & configure ruby; install extra gems.
 
@@ -8,7 +8,7 @@ Installation
 ------------
 
 ```
-ansible-galaxy install mwilliammyers.ruby
+ansible-galaxy install dotstrap.ruby
 ```
 
 Requirements
@@ -34,7 +34,7 @@ Using all the [default variables]:
 ```
     - hosts: servers
       roles:
-         - role: mwilliammyers.ruby
+         - role: dotstrap.ruby
 ```
 
 Overriding some of the [default variables]:
@@ -42,7 +42,7 @@ Overriding some of the [default variables]:
 ```
     - hosts: servers
       roles:
-         - role: mwilliammyers.ruby
+         - role: dotstrap.ruby
            install_state: latest
            configuration_state: present
            gem_home: "{{ ansible_user_dir }}/.gem"
