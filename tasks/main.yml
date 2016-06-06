@@ -17,9 +17,45 @@
     with_items: "{{ gems }}"
   tags:
     - bootstrap
+    - bootstrap_ruby
     - install
+    - install_ruby
     - update
+    - update_ruby
 
-- name: include | configure gem user install
-  include: configure_gems.yml
-  when: gem_user_install == True
+#####=== configure ===#####
+
+- block:
+    - name: setup | determine ruby gems directory
+      command: ls "{{ ansible_user_dir }}"/.gem/ruby
+      register: ruby_version
+
+    - name: bash/zsh | configure | ruby gems PATH
+      blockinfile:
+        dest: "{{ shell_profile }}"
+        state: "{{ configuration_state }}"
+        create: yes
+        backup: no
+        marker: "{{ ruby_marker }}"
+        block: |
+          if [[ ! "$PATH" == *"{{ ansible_user_dir}}/.gem/ruby/{{ ruby_version.stdout }}/bin"* ]]; then
+            export PATH="$PATH:"{{ ansible_user_dir}}/.gem/ruby/{{ ruby_version.stdout }}/bin"
+          fi
+  tags:
+    - bootstrap
+    - bootstrap_ruby
+    - configure
+    - configure_ruby
+    - update
+    - update_ruby
+
+- name: fish | configure | ruby gems PATH
+  command: fish -c "set -Ux fish_user_paths {{ ansible_user_dir }}/.gem/ruby/{{ ruby_version.stdout }}/bin $fish_user_paths"
+  when: ansible_user_shell | match(".*fish")
+  tags:
+    - bootstrap
+    - bootstrap_ruby
+    - configure
+    - configure_ruby
+    - update
+    - update_ruby
